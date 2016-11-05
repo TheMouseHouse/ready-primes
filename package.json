@@ -1,0 +1,35 @@
+{
+  "name": "ready-primes",
+  "version": "1.0.0",
+  "description": "Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
+  "main": "./ready-primes",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheMouseHouse/ready-primes.git"
+  },
+  "keywords": [
+    "svg",
+    "package",
+    "icons",
+    "css"
+  ],
+  "author": "Piotr Skonieczny <piosko@themousehouse.pl> (http://themousehouse.pl/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TheMouseHouse/ready-primes/issues"
+  },
+  "homepage": "https://github.com/TheMouseHouse/ready-primes",
+  "devDependencies": {
+    "typescript": "^2.0.6",
+    "typings": "^1.5.0"
+  },
+  "dependencies": {
+    "bluebird": "^3.4.6",
+    "jsonfile": "^2.4.0",
+    "jsonfile-promised": "0.0.1",
+    "lodash": "^4.16.4"
+  }
+}
