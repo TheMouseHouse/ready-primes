@@ -1,5 +1,5 @@
 "use strict";
-var jsonfile_p = require('jsonfile-promised');
+var JsonHelper_1 = require('./helpers/JsonHelper');
 var ReadyPrimes = (function () {
     function ReadyPrimes() {
     }
@@ -7,7 +7,7 @@ var ReadyPrimes = (function () {
         return [size];
     };
     ReadyPrimes.readIntegers = function (limit) {
-        return jsonfile_p.readFile('./data/' + limit + '.int');
+        return JsonHelper_1.JsonHelper.read(limit.toString());
     };
     return ReadyPrimes;
 }());

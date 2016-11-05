@@ -23,13 +23,15 @@
   },
   "homepage": "https://github.com/TheMouseHouse/ready-primes",
   "devDependencies": {
+    "@types/node": "^6.0.46",
     "typescript": "^2.0.6",
     "typings": "^1.5.0"
   },
   "dependencies": {
+    "@types/bluebird": "^3.0.35",
+    "@types/lodash": "^4.14.38",
     "bluebird": "^3.4.6",
     "jsonfile": "^2.4.0",
-    "jsonfile-promised": "0.0.1",
     "lodash": "^4.16.4"
   }
 }
