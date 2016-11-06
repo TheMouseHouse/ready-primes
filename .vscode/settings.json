@@ -15,4 +15,6 @@
 		"**/.DS_Store": true,
 		"**/*.js.map": true
 	}
+,
+"typescript.tsdk": "./node_modules/typescript/lib"
 }

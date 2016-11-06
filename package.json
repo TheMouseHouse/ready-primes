@@ -4,7 +4,7 @@
   "description": "Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
   "main": "./ready-primes",
   "scripts": {
-    "test": "test"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,8 @@
   "homepage": "https://github.com/TheMouseHouse/ready-primes",
   "devDependencies": {
     "@types/node": "^6.0.46",
+    "chai": "^3.5.0",
+    "mocha": "^3.1.2",
     "typescript": "^2.0.6",
     "typings": "^1.5.0"
   },
