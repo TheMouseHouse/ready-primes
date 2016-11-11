@@ -87,14 +87,8 @@ function getArgValue(needle: string): string {
 
 let hasRead: boolean = hasArg('-r');
 let hasWrite: boolean = hasArg('-w');
-let size: number = Number(getArgValue('-size')) || 2e5;
+let size: number = Number(getArgValue('-size')) || 1e6;
 let chunkSize: number = Number(getArgValue('-chunk')) || 1e4;
-
-if (hasArg('-extended')) {
-    hasWrite = true;
-    hasRead = false;
-    size = 7e7;
-}
 
 if (hasRead && !hasWrite) {
     JsonHelper.readPrimeFile(10000).then((response) => {

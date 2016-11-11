@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "postinstall": "npm run generate",
-    "generate": "node bin\\generate.js -w -size=2e5 -chunk=1e4"
+    "generate": "node bin\\generate.js -w"
   },
   "repository": {
     "type": "git",
