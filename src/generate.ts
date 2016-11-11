@@ -65,7 +65,7 @@ function sieve( limit: number ): Collections {
 			integers[ index ] = 1;
 		}
 	});
-	console.log( 'Run time:', ( ( new Date().getTime() ) - startTimer ) / 1000, 'ms' );
+	console.log( 'Run time:', ( ( new Date().getTime() ) - startTimer ) / 1000, 'seconds' );
 
 	return { primes: primes, integers: integers };
 }
@@ -104,7 +104,7 @@ if ( hasRead && !hasWrite ) {
 
 if ( hasWrite && !hasRead ) {
 	console.log( 'Generating primes. Limited to', size );
-	console.log( 'Approximate ETA:', Math.floor( Math.floor( 3e5 / 7e7 * size ) / 10 ) / 1000, 'ms' );
+	console.log( 'Approximate ETA:', Math.floor( Math.floor( 3e5 / 7e7 * size ) / 10 ) / 1000, 'seconds' );
 
 	fs.emptyDir( './data', ( err: any ) => {
 		if ( !err ) {

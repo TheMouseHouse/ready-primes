@@ -50,7 +50,7 @@ function sieve(limit) {
             integers[index] = 1;
         }
     });
-    console.log('Run time:', ((new Date().getTime()) - startTimer) / 1000, 'ms');
+    console.log('Run time:', ((new Date().getTime()) - startTimer) / 1000, 'seconds');
     return { primes: primes, integers: integers };
 }
 function hasArg(needle) {
@@ -82,7 +82,7 @@ if (hasRead && !hasWrite) {
 }
 if (hasWrite && !hasRead) {
     console.log('Generating primes. Limited to', size);
-    console.log('Approximate ETA:', Math.floor(Math.floor(3e5 / 7e7 * size) / 10) / 1000, 'ms');
+    console.log('Approximate ETA:', Math.floor(Math.floor(3e5 / 7e7 * size) / 10) / 1000, 'seconds');
     fs.emptyDir('./data', function (err) {
         if (!err) {
             var all = sieve(size);
