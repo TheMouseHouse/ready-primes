@@ -1,4 +1,5 @@
 "use strict";
+var fs = require('fs-extra');
 var JsonHelper_1 = require('./helpers/JsonHelper');
 var _chunk = require('lodash/chunk');
 var _each = require('lodash/each');
@@ -67,26 +68,38 @@ function getArgValue(needle) {
 }
 var hasRead = hasArg('-r');
 var hasWrite = hasArg('-w');
+var size = Number(getArgValue('-size')) || 2e5;
+var chunkSize = Number(getArgValue('-chunk')) || 1e4;
+if (hasArg('-extended')) {
+    hasWrite = true;
+    hasRead = false;
+    size = 7e7;
+}
 if (hasRead && !hasWrite) {
     JsonHelper_1.JsonHelper.readPrimeFile(10000).then(function (response) {
         console.log('10000th Prime: ', response[response.length - 1]);
     });
 }
 if (hasWrite && !hasRead) {
-    var all = sieve(Number(getArgValue('-size')) || 7e7);
-    console.log('Primes found:', all.primes.length);
-    console.log('Last prime:', all.primes[all.primes.length - 1]);
-    var chunkSize_1 = Number(getArgValue('-chunk')) || 1e4;
-    _each(_chunk(all.primes, chunkSize_1), function (chunk, index) {
-        JsonHelper_1.JsonHelper.writePrimeFile((index + 1) * chunkSize_1, chunk);
-    });
-    all.integers.shift();
-    _each(_chunk(all.integers, chunkSize_1), function (chunk, index) {
-        if (index === 0) {
-            chunk.reverse();
-            chunk.push(0);
-            chunk.reverse();
+    console.log('Generating primes. Limited to', size);
+    console.log('Approximate ETA:', Math.floor(Math.floor(3e5 / 7e7 * size) / 10) / 1000, 'ms');
+    fs.emptyDir('./data', function (err) {
+        if (!err) {
+            var all = sieve(size);
+            console.log('Primes found:', all.primes.length);
+            console.log('Last prime:', all.primes[all.primes.length - 1]);
+            _each(_chunk(all.primes, chunkSize), function (chunk, index) {
+                JsonHelper_1.JsonHelper.writePrimeFile((index + 1) * chunkSize, chunk);
+            });
+            all.integers.shift();
+            _each(_chunk(all.integers, chunkSize), function (chunk, index) {
+                if (index === 0) {
+                    chunk.reverse();
+                    chunk.push(0);
+                    chunk.reverse();
+                }
+                JsonHelper_1.JsonHelper.writeIntegerFile((index + 1) * chunkSize, chunk);
+            });
         }
-        JsonHelper_1.JsonHelper.writeIntegerFile((index + 1) * chunkSize_1, chunk);
     });
 }

@@ -1,5 +1,6 @@
 // Place your settings in this file to overwrite default and user settings.
 {
+	"typescript.tsdk": "./node_modules/typescript/lib",
 	"editor.fontSize": 12,
 	"editor.insertSpaces": false,
 	"editor.wrappingColumn": -1,
@@ -15,6 +16,4 @@
 		"**/.DS_Store": true,
 		"**/*.js.map": true
 	}
-,
-"typescript.tsdk": "./node_modules/typescript/lib"
 }

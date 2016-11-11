@@ -4,9 +4,9 @@ var Promise = require('bluebird');
 var JsonHelper = (function () {
     function JsonHelper() {
     }
-    JsonHelper.read = function (filename, options) {
+    JsonHelper.read = function (filename) {
         return new Promise(function (resolve, reject) {
-            jsonfile.readFile("./data/" + filename, options, function (err, chunk) {
+            jsonfile.readFile("./data/" + filename, {}, function (err, chunk) {
                 if (err) {
                     reject(err);
                 }
@@ -16,9 +16,9 @@ var JsonHelper = (function () {
             });
         });
     };
-    JsonHelper.write = function (filename, data, options) {
+    JsonHelper.write = function (filename, data) {
         return new Promise(function (resolve, reject) {
-            jsonfile.writeFile("./data/" + filename, data, options, function (err) {
+            jsonfile.writeFile("./data/" + filename, data, {}, function (err) {
                 if (err) {
                     console.log(err);
                     reject(false);
@@ -29,17 +29,17 @@ var JsonHelper = (function () {
             });
         });
     };
-    JsonHelper.readIntegerFile = function (filename, options) {
-        return JsonHelper.read(filename + JsonHelper.INTEGER_EXT, options);
+    JsonHelper.readIntegerFile = function (filename) {
+        return JsonHelper.read(filename + JsonHelper.INTEGER_EXT);
     };
-    JsonHelper.writeIntegerFile = function (filename, data, options) {
-        return JsonHelper.write(filename + JsonHelper.INTEGER_EXT, data, options);
+    JsonHelper.writeIntegerFile = function (filename, data) {
+        return JsonHelper.write(filename + JsonHelper.INTEGER_EXT, data);
     };
-    JsonHelper.readPrimeFile = function (filename, options) {
-        return JsonHelper.read(filename + JsonHelper.PRIME_EXT, options);
+    JsonHelper.readPrimeFile = function (filename) {
+        return JsonHelper.read(filename + JsonHelper.PRIME_EXT);
     };
-    JsonHelper.writePrimeFile = function (filename, data, options) {
-        return JsonHelper.write(filename + JsonHelper.PRIME_EXT, data, options);
+    JsonHelper.writePrimeFile = function (filename, data) {
+        return JsonHelper.write(filename + JsonHelper.PRIME_EXT, data);
     };
     JsonHelper.INTEGER_EXT = '.int';
     JsonHelper.PRIME_EXT = '.prime';

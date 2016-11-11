@@ -1,22 +1,19 @@
 import * as Promise from 'bluebird';
 import { JsonHelper } from './helpers/JsonHelper';
+import { MathHelper } from './helpers/MathHelper';
 
-export interface IReadyPrimes {
-	getCollection( size: number ): number[];
-}
+export class ReadyPrimes {
 
-export default class ReadyPrimes implements IReadyPrimes {
-	// private static CHUNK_SIZE: number = 1e4;
+	static isPrime( n: number ): Promise<any> {
+		let chunk: number = MathHelper.getChunkId( n );
 
-	getCollection( size: number ): number[] {
-		return [ size ];
+		return new Promise(( resolve: Function, reject: Function ) => {
+			JsonHelper.readIntegerFile( chunk ).then(( data: number[] ) => {
+				resolve( data[ n ] === 1 );
+			}).error(( err ) => {
+				reject( false );
+			});
+		});
 	}
 
-	static readIntegers( limit: number ): Promise<any> {
-		return JsonHelper.read( limit.toString() );
-	}
 }
-
-ReadyPrimes.readIntegers( 10000 ).then(( response ) => {
-	console.log( response );
-});

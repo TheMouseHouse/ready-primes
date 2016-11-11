@@ -1,3 +1,4 @@
+import * as fs from 'fs-extra';
 import { JsonHelper } from './helpers/JsonHelper';
 import * as _chunk from 'lodash/chunk';
 import * as _each from 'lodash/each';
@@ -86,6 +87,14 @@ function getArgValue( needle: string ): string {
 
 let hasRead: boolean = hasArg( '-r' );
 let hasWrite: boolean = hasArg( '-w' );
+let size: number = Number( getArgValue( '-size' ) ) || 2e5;
+let chunkSize: number = Number( getArgValue( '-chunk' ) ) || 1e4;
+
+if ( hasArg( '-extended' ) ) {
+	hasWrite = true;
+	hasRead = false;
+	size = 7e7;
+}
 
 if ( hasRead && !hasWrite ) {
 	JsonHelper.readPrimeFile( 10000 ).then(( response ) => {
@@ -94,24 +103,29 @@ if ( hasRead && !hasWrite ) {
 }
 
 if ( hasWrite && !hasRead ) {
-	let all: Collections = sieve( Number( getArgValue( '-size' ) ) || 7e7 );
+	console.log( 'Generating primes. Limited to', size );
+	console.log( 'Approximate ETA:', Math.floor( Math.floor( 3e5 / 7e7 * size ) / 10 ) / 1000, 'ms' );
 
-	console.log( 'Primes found:', all.primes.length );
-	console.log( 'Last prime:', all.primes[ all.primes.length - 1 ] );
+	fs.emptyDir( './data', ( err: any ) => {
+		if ( !err ) {
+			let all: Collections = sieve( size );
 
-	let chunkSize: number = Number( getArgValue( '-chunk' ) ) || 1e4;
+			console.log( 'Primes found:', all.primes.length );
+			console.log( 'Last prime:', all.primes[ all.primes.length - 1 ] );
 
-	_each( _chunk( all.primes, chunkSize ), ( chunk: PrimeCollection, index: number ) => {
-		JsonHelper.writePrimeFile(( index + 1 ) * chunkSize, chunk );
-	});
+			_each( _chunk( all.primes, chunkSize ), ( chunk: PrimeCollection, index: number ) => {
+				JsonHelper.writePrimeFile(( index + 1 ) * chunkSize, chunk );
+			});
 
-	all.integers.shift();
-	_each( _chunk( all.integers, chunkSize ), ( chunk: IntegersCollection, index: number ) => {
-		if ( index === 0 ) {
-			chunk.reverse();
-			chunk.push( 0 );
-			chunk.reverse();
+			all.integers.shift();
+			_each( _chunk( all.integers, chunkSize ), ( chunk: IntegersCollection, index: number ) => {
+				if ( index === 0 ) {
+					chunk.reverse();
+					chunk.push( 0 );
+					chunk.reverse();
+				}
+				JsonHelper.writeIntegerFile(( index + 1 ) * chunkSize, chunk );
+			});
 		}
-		JsonHelper.writeIntegerFile(( index + 1 ) * chunkSize, chunk );
 	});
 }

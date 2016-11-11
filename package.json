@@ -2,9 +2,11 @@
   "name": "ready-primes",
   "version": "1.0.0",
   "description": "Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
-  "main": "./ready-primes",
+  "main": "./bin/ready-primes.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "postinstall": "npm run generate",
+    "generate": "node bin\\generate.js -w -size=2e5 -chunk=1e4"
   },
   "repository": {
     "type": "git",
@@ -23,8 +25,12 @@
   },
   "homepage": "https://github.com/TheMouseHouse/ready-primes",
   "devDependencies": {
+    "@types/del": "^2.2.31",
+    "@types/fs-extra": "0.0.34",
     "@types/node": "^6.0.46",
     "chai": "^3.5.0",
+    "del": "^2.2.2",
+    "fs-extra": "^1.0.0",
     "mocha": "^3.1.2",
     "typescript": "^2.0.6",
     "typings": "^1.5.0"
