@@ -1,22 +1,22 @@
 {
-  "name": "ready-primes",
+  "name": "ready-primes-extended",
   "version": "1.0.0",
-  "description": "Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
+  "description": "Pre-calculated extended collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
   "main": "./bin/ready-primes.js",
   "scripts": {
     "test": "mocha",
     "postinstall": "npm run generate",
-    "generate": "node bin\\generate.js -w -size=2e5 -chunk=1e4"
+    "generate": "node bin\\generate.js -w -size=7e7 -chunk=1e4"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/TheMouseHouse/ready-primes.git"
   },
   "keywords": [
-    "svg",
-    "package",
-    "icons",
-    "css"
+    "prime",
+    "primes",
+    "number",
+    "numbers"
   ],
   "author": "Piotr Skonieczny <piosko@themousehouse.pl> (http://themousehouse.pl/)",
   "license": "MIT",
