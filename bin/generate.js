@@ -68,13 +68,8 @@ function getArgValue(needle) {
 }
 var hasRead = hasArg('-r');
 var hasWrite = hasArg('-w');
-var size = Number(getArgValue('-size')) || 2e5;
+var size = Number(getArgValue('-size')) || 1e6;
 var chunkSize = Number(getArgValue('-chunk')) || 1e4;
-if (hasArg('-extended')) {
-    hasWrite = true;
-    hasRead = false;
-    size = 7e7;
-}
 if (hasRead && !hasWrite) {
     JsonHelper_1.JsonHelper.readPrimeFile(10000).then(function (response) {
         console.log('10000th Prime: ', response[response.length - 1]);
