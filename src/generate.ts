@@ -3,10 +3,21 @@ import { JsonHelper } from './helpers/JsonHelper';
 import * as _chunk from 'lodash/chunk';
 import * as _each from 'lodash/each';
 import * as _fill from 'lodash/fill';
+import * as _last from 'lodash/last';
 
 type IntegersCollection = number[];
 type PrimeCollection = number[];
 type Collections = { primes: PrimeCollection, integers: IntegersCollection };
+type ReferenceObj = { first: number, last: number };
+type ReferenceCategory = { [chunk: number]: ReferenceObj };
+type ReferenceMetric = { prime: number, integer: number };
+type Reference = {
+    integers: ReferenceCategory,
+    primes: ReferenceCategory,
+    last: ReferenceMetric,
+    length: ReferenceMetric,
+    chunkSize: number
+};
 
 function sieve(limit: number): Collections {
     const startTimer: number = new Date().getTime();
@@ -102,13 +113,28 @@ if (hasWrite && !hasRead) {
 
     fs.emptyDir('./data', (err: any) => {
         if (!err) {
-            let all: Collections = sieve(size);
+            let all: Collections = sieve(size + 1);
+            let referenceData: Reference = {
+                integers: {},
+                primes: {},
+                last: {
+                    prime: all.primes[all.primes.length - 1],
+                    integer: size
+                },
+                length: {
+                    prime: all.primes.length,
+                    integer: size
+                },
+                chunkSize: chunkSize
+            };
 
             console.log('Primes found:', all.primes.length);
             console.log('Last prime:', all.primes[all.primes.length - 1]);
 
             _each(_chunk(all.primes, chunkSize), (chunk: PrimeCollection, index: number) => {
-                JsonHelper.writePrimeFile((index + 1) * chunkSize, chunk);
+                const chunkName: number = (index + 1) * chunkSize;
+                referenceData.primes[chunkName] = <ReferenceObj>{ first: chunk[0], last: _last(chunk) };
+                JsonHelper.writePrimeFile(chunkName, chunk);
             });
 
             all.integers.shift();
@@ -118,8 +144,13 @@ if (hasWrite && !hasRead) {
                     chunk.push(0);
                     chunk.reverse();
                 }
-                JsonHelper.writeIntegerFile((index + 1) * chunkSize, chunk);
+                const chunkName: number = (index + 1) * chunkSize;
+                let first: number = chunkName - chunkSize;
+                referenceData.integers[chunkName] = <ReferenceObj>{ first: first === 0 ? first : first + 1, last: chunkName };
+                JsonHelper.writeIntegerFile(chunkName, chunk);
             });
+
+            JsonHelper.writeReference(referenceData);
         }
     });
 }
