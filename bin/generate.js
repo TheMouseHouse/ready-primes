@@ -4,6 +4,7 @@ var JsonHelper_1 = require('./helpers/JsonHelper');
 var _chunk = require('lodash/chunk');
 var _each = require('lodash/each');
 var _fill = require('lodash/fill');
+var _last = require('lodash/last');
 function sieve(limit) {
     var startTimer = new Date().getTime();
     var limitSqrt = Math.sqrt(limit);
@@ -80,11 +81,26 @@ if (hasWrite && !hasRead) {
     console.log('Approximate ETA:', Math.floor(Math.floor(3e5 / 7e7 * size) / 10) / 1000, 'seconds');
     fs.emptyDir('./data', function (err) {
         if (!err) {
-            var all = sieve(size);
+            var all = sieve(size + 1);
+            var referenceData_1 = {
+                integers: {},
+                primes: {},
+                last: {
+                    prime: all.primes[all.primes.length - 1],
+                    integer: size
+                },
+                length: {
+                    prime: all.primes.length,
+                    integer: size
+                },
+                chunkSize: chunkSize
+            };
             console.log('Primes found:', all.primes.length);
             console.log('Last prime:', all.primes[all.primes.length - 1]);
             _each(_chunk(all.primes, chunkSize), function (chunk, index) {
-                JsonHelper_1.JsonHelper.writePrimeFile((index + 1) * chunkSize, chunk);
+                var chunkName = (index + 1) * chunkSize;
+                referenceData_1.primes[chunkName] = { first: chunk[0], last: _last(chunk) };
+                JsonHelper_1.JsonHelper.writePrimeFile(chunkName, chunk);
             });
             all.integers.shift();
             _each(_chunk(all.integers, chunkSize), function (chunk, index) {
@@ -93,8 +109,12 @@ if (hasWrite && !hasRead) {
                     chunk.push(0);
                     chunk.reverse();
                 }
-                JsonHelper_1.JsonHelper.writeIntegerFile((index + 1) * chunkSize, chunk);
+                var chunkName = (index + 1) * chunkSize;
+                var first = chunkName - chunkSize;
+                referenceData_1.integers[chunkName] = { first: first === 0 ? first : first + 1, last: chunkName };
+                JsonHelper_1.JsonHelper.writeIntegerFile(chunkName, chunk);
             });
+            JsonHelper_1.JsonHelper.writeReference(referenceData_1);
         }
     });
 }

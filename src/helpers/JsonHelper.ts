@@ -1,7 +1,9 @@
 /// <reference path="../../typings/jsonfile.d.ts" />
 
 import * as jsonfile from 'jsonfile';
+import * as fs from 'fs-extra';
 import * as Promise from 'bluebird';
+import * as _each from 'lodash/each';
 
 export class JsonHelper {
 
@@ -38,6 +40,14 @@ export class JsonHelper {
 		return JsonHelper.read( filename + JsonHelper.INTEGER_EXT );
 	}
 
+	static readMultipleIntegerFiles( filenames: number[] | string[] ): Promise<any> {
+		let promises: Promise<any>[] = [];
+		_each( filenames, ( filename: number | string ) => {
+			promises.push( JsonHelper.readIntegerFile( filename ) );
+		});
+		return Promise.all( promises );
+	}
+
 	static writeIntegerFile( filename: string | number, data: any ): Promise<any> {
 		return JsonHelper.write( filename + JsonHelper.INTEGER_EXT, data );
 	}
@@ -46,8 +56,23 @@ export class JsonHelper {
 		return JsonHelper.read( filename + JsonHelper.PRIME_EXT );
 	}
 
+	static readMultiplePrimeFiles( filenames: number[] | string[] ): Promise<any> {
+		let promises: Promise<any>[] = [];
+		_each( filenames, ( filename: number | string ) => {
+			promises.push( JsonHelper.readPrimeFile( filename ) );
+		});
+		return Promise.all( promises );
+	}
+
 	static writePrimeFile( filename: string | number, data: any ): Promise<any> {
 		return JsonHelper.write( filename + JsonHelper.PRIME_EXT, data );
+	}
+
+	static writeReference( data: any ): void {
+		const referencePath: string = './data/reference.js';
+		const referenceData: string = 'exports.reference = ' + JSON.stringify( data );
+
+		fs.outputFile( referencePath, referenceData );
 	}
 
 }
