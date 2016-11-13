@@ -7,9 +7,8 @@ var _slice = require('lodash/slice');
 var ReadyPrimes = (function () {
     function ReadyPrimes() {
     }
-    ReadyPrimes.getMultiple = function (func, size, index) {
+    ReadyPrimes.getMultiple = function (func, chunks, size, index) {
         if (index === void 0) { index = 0; }
-        var chunks = MathHelper_1.MathHelper.getChunks(size + index);
         return new Promise(function (resolve, reject) {
             func(chunks).then(function (data) {
                 resolve(_slice(_flatten(data), index, size + index));
@@ -18,14 +17,16 @@ var ReadyPrimes = (function () {
     };
     ReadyPrimes.primes = function (size, index) {
         if (index === void 0) { index = 0; }
-        return ReadyPrimes.getMultiple(JsonHelper_1.JsonHelper.readMultiplePrimeFiles, size, index);
+        var chunks = MathHelper_1.MathHelper.getPrimeChunks(size + index);
+        return ReadyPrimes.getMultiple(JsonHelper_1.JsonHelper.readMultiplePrimeFiles, chunks, size, index);
     };
     ReadyPrimes.integers = function (size, index) {
         if (index === void 0) { index = 0; }
-        return ReadyPrimes.getMultiple(JsonHelper_1.JsonHelper.readMultipleIntegerFiles, size, index);
+        var chunks = MathHelper_1.MathHelper.getIntegerChunks(size + index);
+        return ReadyPrimes.getMultiple(JsonHelper_1.JsonHelper.readMultipleIntegerFiles, chunks, size, index);
     };
     ReadyPrimes.isPrime = function (n) {
-        var chunk = MathHelper_1.MathHelper.getChunkId(n);
+        var chunk = MathHelper_1.MathHelper.getIntegerChunk(n);
         return new Promise(function (resolve, reject) {
             JsonHelper_1.JsonHelper.readIntegerFile(chunk).then(function (data) {
                 resolve(data[n] === 1);
@@ -37,3 +38,10 @@ var ReadyPrimes = (function () {
     return ReadyPrimes;
 }());
 exports.ReadyPrimes = ReadyPrimes;
+var startTimer = new Date().getTime();
+var endTime = 0;
+ReadyPrimes.primes(4, 2e7).then(function (data) {
+    endTime = new Date().getTime() - startTimer;
+    console.log(data);
+    console.log('Response in', endTime, 'ms');
+});
