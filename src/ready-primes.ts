@@ -3,11 +3,11 @@ import { JsonHelper } from './helpers/JsonHelper';
 import { MathHelper } from './helpers/MathHelper';
 import * as _flatten from 'lodash/flatten';
 import * as _slice from 'lodash/slice';
+import * as _takeRight from 'lodash/takeRight';
 
 export class ReadyPrimes {
 
-	private static getMultiple( func: Function, size: number, index: number = 0 ): Promise<any> {
-		let chunks: number[] = MathHelper.getChunks( size + index );
+	private static getMultiple( func: Function, chunks: number[], size: number, index: number = 0 ): Promise<any> {
 		return new Promise(( resolve: Function, reject: Function ) => {
 			func( chunks ).then(( data: any ) => {
 				resolve( _slice( _flatten( data ), index, size + index ) );
@@ -16,15 +16,29 @@ export class ReadyPrimes {
 	}
 
 	static primes( size: number, index: number = 0 ): Promise<any> {
-		return ReadyPrimes.getMultiple( JsonHelper.readMultiplePrimeFiles, size, index );
+		if ( index < 0 ) {
+			index = 0;
+		}
+		if ( index > MathHelper.REF.length.prime - size ) {
+			index = MathHelper.REF.length.prime - size;
+		}
+		let chunks: number[] = MathHelper.getPrimeChunks( size + index );
+		return ReadyPrimes.getMultiple( JsonHelper.readMultiplePrimeFiles, chunks, size, index );
 	}
 
 	static integers( size: number, index: number = 0 ): Promise<any> {
-		return ReadyPrimes.getMultiple( JsonHelper.readMultipleIntegerFiles, size, index );
+		if ( index < 0 ) {
+			index = 0;
+		}
+		if ( index > MathHelper.REF.length.integer - size ) {
+			index = MathHelper.REF.length.integer - size;
+		}
+		let chunks: number[] = MathHelper.getIntegerChunks( size + index );
+		return ReadyPrimes.getMultiple( JsonHelper.readMultipleIntegerFiles, chunks, size, index );
 	}
 
 	static isPrime( n: number ): Promise<any> {
-		let chunk: number = MathHelper.getChunkId( n );
+		let chunk: number = MathHelper.getIntegerChunk( n );
 
 		return new Promise(( resolve: Function, reject: Function ) => {
 			JsonHelper.readIntegerFile( chunk ).then(( data: number[] ) => {
@@ -36,11 +50,3 @@ export class ReadyPrimes {
 	}
 
 }
-
-// const startTimer: number = new Date().getTime();
-// let endTime: number = 0;
-// ReadyPrimes.primes( 4, 10 ).then(( data: number[] ) => {
-// 	endTime = new Date().getTime() - startTimer;
-// 	console.log( data );
-// 	console.log( 'Response in', endTime, 'ms' );
-// });
