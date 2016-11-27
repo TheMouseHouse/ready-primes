@@ -17,11 +17,23 @@ var ReadyPrimes = (function () {
     };
     ReadyPrimes.primes = function (size, index) {
         if (index === void 0) { index = 0; }
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > MathHelper_1.MathHelper.REF.length.prime - size) {
+            index = MathHelper_1.MathHelper.REF.length.prime - size;
+        }
         var chunks = MathHelper_1.MathHelper.getPrimeChunks(size + index);
         return ReadyPrimes.getMultiple(JsonHelper_1.JsonHelper.readMultiplePrimeFiles, chunks, size, index);
     };
     ReadyPrimes.integers = function (size, index) {
         if (index === void 0) { index = 0; }
+        if (index < 0) {
+            index = 0;
+        }
+        if (index > MathHelper_1.MathHelper.REF.length.integer - size) {
+            index = MathHelper_1.MathHelper.REF.length.integer - size;
+        }
         var chunks = MathHelper_1.MathHelper.getIntegerChunks(size + index);
         return ReadyPrimes.getMultiple(JsonHelper_1.JsonHelper.readMultipleIntegerFiles, chunks, size, index);
     };
@@ -38,10 +50,3 @@ var ReadyPrimes = (function () {
     return ReadyPrimes;
 }());
 exports.ReadyPrimes = ReadyPrimes;
-var startTimer = new Date().getTime();
-var endTime = 0;
-ReadyPrimes.primes(4, 2e7).then(function (data) {
-    endTime = new Date().getTime() - startTimer;
-    console.log(data);
-    console.log('Response in', endTime, 'ms');
-});

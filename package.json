@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
   "main": "./bin/ready-primes.js",
+  "bin": {
+    "ReadyPrimes": "./bin/ready-primes"
+  },
   "scripts": {
     "test": "mocha",
     "postinstall": "npm run generate",

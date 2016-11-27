@@ -3,6 +3,7 @@ import { JsonHelper } from './helpers/JsonHelper';
 import { MathHelper } from './helpers/MathHelper';
 import * as _flatten from 'lodash/flatten';
 import * as _slice from 'lodash/slice';
+import * as _takeRight from 'lodash/takeRight';
 
 export class ReadyPrimes {
 
@@ -15,11 +16,23 @@ export class ReadyPrimes {
 	}
 
 	static primes( size: number, index: number = 0 ): Promise<any> {
+		if ( index < 0 ) {
+			index = 0;
+		}
+		if ( index > MathHelper.REF.length.prime - size ) {
+			index = MathHelper.REF.length.prime - size;
+		}
 		let chunks: number[] = MathHelper.getPrimeChunks( size + index );
 		return ReadyPrimes.getMultiple( JsonHelper.readMultiplePrimeFiles, chunks, size, index );
 	}
 
 	static integers( size: number, index: number = 0 ): Promise<any> {
+		if ( index < 0 ) {
+			index = 0;
+		}
+		if ( index > MathHelper.REF.length.integer - size ) {
+			index = MathHelper.REF.length.integer - size;
+		}
 		let chunks: number[] = MathHelper.getIntegerChunks( size + index );
 		return ReadyPrimes.getMultiple( JsonHelper.readMultipleIntegerFiles, chunks, size, index );
 	}
@@ -37,11 +50,3 @@ export class ReadyPrimes {
 	}
 
 }
-
-const startTimer: number = new Date().getTime();
-let endTime: number = 0;
-ReadyPrimes.primes( 4, 2e7 ).then(( data: number[] ) => {
-	endTime = new Date().getTime() - startTimer;
-	console.log( data );
-	console.log( 'Response in', endTime, 'ms' );
-});
