@@ -5,7 +5,7 @@ import { Reference, ReferenceObj } from './../generate';
 
 export class MathHelper {
 
-	static REF: Reference = reference;
+	static readonly REF: Reference = reference;
 
 	static getPrimeChunk( n: number ): number {
 		if ( n >= MathHelper.REF.last.prime ) {
