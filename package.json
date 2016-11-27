@@ -4,7 +4,7 @@
   "description": "Pre-calculated extended collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
   "main": "./bin/ready-primes.js",
   "bin": {
-    "ReadyPrimes": "./bin/ready-primes"
+    "ReadyPrimes": "./bin/readyprimes"
   },
   "scripts": {
     "test": "mocha",
