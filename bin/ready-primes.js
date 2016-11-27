@@ -15,6 +15,16 @@ var ReadyPrimes = (function () {
             }).error(function () { return reject; });
         });
     };
+    /**
+     * Returns Promise, which when resolved, returns an Array of Primes of length required (size).
+     *
+     * @static
+     * @param {number} size
+     * @param {number} [index=0]
+     * @returns {Promise<any>}
+     *
+     * @memberOf ReadyPrimes
+     */
     ReadyPrimes.primes = function (size, index) {
         if (index === void 0) { index = 0; }
         if (index < 0) {
@@ -26,6 +36,23 @@ var ReadyPrimes = (function () {
         var chunks = MathHelper_1.MathHelper.getPrimeChunks(size + index);
         return ReadyPrimes.getMultiple(JsonHelper_1.JsonHelper.readMultiplePrimeFiles, chunks, size, index);
     };
+    /**
+     * Returns Promise, which when resolved, returns Array with given length (size) of 0's and 1's corresponding to whether index is a Prime or not.
+     * Example:
+     *
+     *         *  *     *     *             *   ... primes
+     * [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ] ... Indexes
+     * [ 0, 0, 1, 1, 0, 1, 0, 1, 0, 0,  0,  1 ] ... result you will receive.
+     *
+     * Therefore, result Array[11] = 1 = true = prime
+     *
+     * @static
+     * @param {number} size
+     * @param {number} [index=0]
+     * @returns {Promise<any>}
+     *
+     * @memberOf ReadyPrimes
+     */
     ReadyPrimes.integers = function (size, index) {
         if (index === void 0) { index = 0; }
         if (index < 0) {
@@ -37,6 +64,15 @@ var ReadyPrimes = (function () {
         var chunks = MathHelper_1.MathHelper.getIntegerChunks(size + index);
         return ReadyPrimes.getMultiple(JsonHelper_1.JsonHelper.readMultipleIntegerFiles, chunks, size, index);
     };
+    /**
+     * Returns Promise, which when resolved, returns true or false whether provided number is a Prime.
+     *
+     * @static
+     * @param {number} n
+     * @returns {Promise<any>}
+     *
+     * @memberOf ReadyPrimes
+     */
     ReadyPrimes.isPrime = function (n) {
         var chunk = MathHelper_1.MathHelper.getIntegerChunk(n);
         return new Promise(function (resolve, reject) {

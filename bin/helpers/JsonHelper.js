@@ -1,3 +1,4 @@
+/// <reference path="../../typings/jsonfile.d.ts" />
 "use strict";
 var jsonfile = require('jsonfile');
 var fs = require('fs-extra');
