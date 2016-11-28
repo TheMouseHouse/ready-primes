@@ -22,7 +22,7 @@ npm install ready-primes
 ## Usage
 
 ```js
-const ReadyPrimes = require('ready-primes');
+const ReadyPrimes = require('ready-primes').ReadyPrimes;
 
 ReadyPrimes.primes(4).then( (result) => {
     console.log(result);
@@ -43,8 +43,8 @@ ReadyPrimes.isPrime(11).then( (result) => {
 ## Methods
 
 ### primes ( size, index? )
-`size: int` - length of desired result array  
-`index: int (optional)` - start position. Default is 0  
+`size: int` - length of desired result array
+`index: int (optional)` - start position. Default is 0
 **returns:** `Promise < int[] >`
 
 ```js
@@ -60,8 +60,8 @@ ReadyPrimes.primes(4, 2).then( (result) => {
 ```
 
 ### integers ( size, index? )
-`size: int` - the length of desired result array  
-`index: int (optional)` - start position. Default is 0  
+`size: int` - the length of desired result array
+`index: int (optional)` - start position. Default is 0
 **returns:** `Promise < int[] >`
 
 The result is an Array of 1's and 0's, where the index inside the Array determines the actual integer.
@@ -84,7 +84,7 @@ ReadyPrimes.integers(7, 2).then( (result) => {
 ```
 
 ### isPrime ( n )
-`n: int` - number to look-up  
+`n: int` - number to look-up
 **returns:** `Promise < boolean >`
 
 ```js
