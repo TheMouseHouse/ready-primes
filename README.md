@@ -24,11 +24,6 @@ npm install ready-primes-extended
 ```js
 const ReadyPrimes = require('ready-primes-extended');
 
-ReadyPrimes.primes(4).then( (result) => {
-    console.log(result);
-    // output: [ 2, 3, 5, 7 ]
-});
-
 ReadyPrimes.integers(7).then( (result) => {
     console.log(result);
     // output: [ 0, 0, 1, 1, 0, 1, 0, 1 ]
