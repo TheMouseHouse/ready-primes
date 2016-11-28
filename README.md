@@ -1,11 +1,11 @@
-ReadyPrimes (Standard)
+ReadyPrimes Extended
 ===================
 
 
 Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.
 
-Standard version is limited to **78,498** primes and **1,000,000** integers.
-If you need **more** get [ReadyPrimes Extended](https://www.npmjs.com/package/ready-primes-extended), which has
+Extended version is limited to **3,001,134** primes and **50,000,000** integers.
+If you need **less** get [ReadyPrimes (Standard)](https://www.npmjs.com/package/ready-primes)
 
 
 ----------
