@@ -8,14 +8,15 @@ Standard version is limited to **78,498** primes and **1,000,000** integers.
 If you need **more** get [ReadyPrimes Extended](https://www.npmjs.com/package/ready-primes-extended).
 
 
+----------
+
 ## Install
-```
-npm install ready-primes
-```
 
 ReadyPrimes will generate necessary files post install.
 
-----------
+```
+npm install ready-primes
+```
 
 
 ## Usage
@@ -92,4 +93,3 @@ ReadyPrimes.isPrime(11).then( (result) => {
     // output: true
 });
 ```
-
