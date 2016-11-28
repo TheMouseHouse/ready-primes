@@ -1,11 +1,19 @@
 # ReadyPrimes (Standard)
 
-
 Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.
+
+Get any number of Primes in **milliseconds** !!!
 
 Standard version is limited to **78,498** primes and **1,000,000** integers.
 If you need **more** get [ReadyPrimes Extended](https://www.npmjs.com/package/ready-primes-extended).
 
+
+## Install
+```
+npm install ready-primes
+```
+
+ReadyPrimes will generate necessary files post install.
 
 ----------
 
@@ -54,6 +62,13 @@ ReadyPrimes.primes(4, 2).then( (result) => {
 `size: int` - the length of desired result array  
 `index: int (optional)` - start position. Default is 0  
 **returns:** `Promise < int[] >`
+
+The result is an Array of 1's and 0's, where the index inside the Array determines the actual integer.
+The length of the result is always `size + 1`, since Array indexes start from 0.
+
+Example:
+Array[11] = 1, because it is a prime
+Array[12] = 0, because it is not a prime
 
 ```js
 ReadyPrimes.integers(7).then( (result) => {
