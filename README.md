@@ -15,7 +15,7 @@ If you need **less** get [ReadyPrimes (Standard)](https://www.npmjs.com/package/
 ReadyPrimes will generate necessary files post install.
 
 ```
-npm install ready-primes
+npm install ready-primes-extended
 ```
 
 
