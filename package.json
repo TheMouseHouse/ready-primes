@@ -1,6 +1,6 @@
 {
   "name": "ready-primes",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Get Primes in milliseconds. Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
   "main": "./bin/ready-primes.js",
   "bin": {
@@ -28,20 +28,20 @@
   },
   "homepage": "https://github.com/TheMouseHouse/ready-primes",
   "devDependencies": {
-    "@types/del": "^2.2.31",
-    "@types/fs-extra": "0.0.34",
     "@types/node": "^6.0.46",
     "chai": "^3.5.0",
-    "del": "^2.2.2",
-    "fs-extra": "^1.0.0",
     "mocha": "^3.1.2",
     "typescript": "^2.0.6",
     "typings": "^1.5.0"
   },
   "dependencies": {
     "@types/bluebird": "^3.0.35",
+    "@types/del": "^2.2.31",
     "@types/lodash": "^4.14.38",
+    "@types/fs-extra": "0.0.34",
     "bluebird": "^3.4.6",
+    "del": "^2.2.2",
+    "fs-extra": "^1.0.0",
     "jsonfile": "^2.4.0",
     "lodash": "^4.16.4"
   }
