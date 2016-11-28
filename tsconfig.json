@@ -6,7 +6,7 @@
     "removeComments": false,
     "sourceMap": false,
     "outDir": "bin",
-    "declaration": true
+    "declaration": false
   },
   "include": [
     "src/**/*.ts"
