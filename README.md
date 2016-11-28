@@ -22,7 +22,7 @@ npm install ready-primes-extended
 ## Usage
 
 ```js
-const ReadyPrimes = require('ready-primes');
+const ReadyPrimes = require('ready-primes-extended');
 
 ReadyPrimes.primes(4).then( (result) => {
     console.log(result);
