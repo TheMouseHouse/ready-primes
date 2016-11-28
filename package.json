@@ -1,6 +1,6 @@
 {
   "name": "ready-primes",
-  "version": "0.9.8",
+  "version": "0.9.9",
   "description": "Get Primes in milliseconds. Pre-calculated collections of prime numbers, natural numbers with distinguished primes and methods to retrieve them.",
   "main": "./bin/ready-primes.js",
   "bin": {
